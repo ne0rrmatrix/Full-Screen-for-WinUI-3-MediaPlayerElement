@@ -18,14 +18,18 @@ public class CustomBinding
         if (_appWindow.Presenter.Kind == AppWindowPresenterKind.FullScreen)
         {
             _appWindow.SetPresenter(AppWindowPresenterKind.Default);
-            RestoreAllElements();
-           
+            Element.ForEach(x => SetItemSize(x.Element, x.Width, x.Height, x.Thickness));
+            Debug.WriteLine("");
+            Element.Clear();
         }
         else
         {
             _appWindow.SetPresenter(AppWindowPresenterKind.FullScreen);
             GetAllElements(element);
-            SetallElementsMaxSize();
+            Debug.WriteLine("");
+            Element.ForEach(x => SetItemSize(x.Element, double.NaN, double.NaN, new Thickness(0, 0, 0, 0)));
+            Debug.WriteLine("");
+            
         }
     }
     private void GetAllElements(FrameworkElement element)
@@ -33,11 +37,13 @@ public class CustomBinding
         ElementData temp = new()
         {
             Element = element,
+            Thickness = new Thickness(element.Margin.Left, element.Margin.Top, element.Margin.Right, element.Margin.Bottom),
             Width = GetWidth(element),
-            Height = GetHeight(element),
-            Thickness = new Thickness(element.Margin.Left, element.Margin.Top, element.Margin.Right, element.Margin.Bottom)
+            Height = GetHeight(element)
         };
         Element.Add(temp);
+
+        Debug.WriteLine(temp.Thickness.Left + " " + temp.Thickness.Top + " " + temp.Thickness.Right + " " + temp.Thickness.Bottom);
         while (true)
         {
             ElementData item = new();
@@ -51,6 +57,7 @@ public class CustomBinding
             item.Width = GetWidth(element);
             item.Height = GetHeight(element);
             Element.Add(item);
+            Debug.WriteLine(item.Thickness.Left + " " + item.Thickness.Top + " " + item.Thickness.Right + " " + item.Thickness.Bottom);
         }
     }
     private static double GetWidth(FrameworkElement frameworkElement)
@@ -100,14 +107,6 @@ public class CustomBinding
         BindWidth(frameworkElement, frameworkElement);
         BindHeight(frameworkElement, frameworkElement);
         frameworkElement.Margin = new Thickness(thickness.Left, thickness.Top, thickness.Right, thickness.Bottom);
-    }
-    private void SetallElementsMaxSize()
-    {
-        Element.ForEach(x => SetItemSize(x.Element, double.NaN, double.NaN, new Thickness(0,0,0,0)));
-    }
-    private void RestoreAllElements()
-    {
-        Element.ForEach(x => SetItemSize(x.Element, x.Width, x.Height, x.Thickness));
-        Element.ForEach(x => Debug.WriteLine(x.Width + " " + x.Height));
+        Debug.WriteLine(thickness.Left + " " + thickness.Top + " " + thickness.Right + " " + thickness.Bottom);
     }
 }

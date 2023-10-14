@@ -8,9 +8,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     x:Name="window"
     mc:Ignorable="d">
-    <Page Margin="20" Background="White">
+    <Page Margin="10" Background="White">
         <Grid
-            x:Name="grid"
             Width="820"
             Height="620"
             Margin="20"
