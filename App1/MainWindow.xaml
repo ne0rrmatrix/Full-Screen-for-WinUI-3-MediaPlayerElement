@@ -8,11 +8,12 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     x:Name="window"
     mc:Ignorable="d">
-    <Page Background="White">
+    <Page Margin="20" Background="White">
         <Grid
             x:Name="grid"
             Width="820"
             Height="620"
+            Margin="20"
             Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
             <Grid.RowDefinitions>
@@ -24,6 +25,7 @@
                 Grid.Row="0"
                 Width="780"
                 Height="400"
+                Margin="20"
                 AreTransportControlsEnabled="True"
                 Background="Gray"
                 Source="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4">
