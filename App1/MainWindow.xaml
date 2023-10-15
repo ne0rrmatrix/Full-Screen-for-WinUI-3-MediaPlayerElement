@@ -9,46 +9,64 @@
     x:Name="window"
     mc:Ignorable="d">
     <Page Margin="10" Background="White">
-        <Grid
-            Width="820"
-            Height="620"
-            Margin="20"
-            Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <MediaPlayerElement
-                x:Name="mediaElement"
+        <StackPanel>
+            <TextBox
                 Grid.Row="0"
-                Width="780"
-                Height="400"
+                FontSize="32"
+                Text="Hello, World!" />
+            <Grid
+                Width="820"
+                Height="820"
                 Margin="20"
-                AreTransportControlsEnabled="True"
-                Background="Gray"
-                Source="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4">
-                <MediaPlayerElement.TransportControls>
-                    <local:CustomTransportControls
-                        FullScreen="CustomTransportControls_FullScreen"
-                        IsFastForwardButtonVisible="True"
-                        IsFastForwardEnabled="True"
-                        IsFastRewindButtonVisible="True"
-                        IsFastRewindEnabled="True"
-                        IsZoomButtonVisible="True"
-                        IsZoomEnabled="True" />
-                </MediaPlayerElement.TransportControls>
-            </MediaPlayerElement>
-            <TextBlock
-                x:Name="Text"
-                Grid.Row="1"
-                Width="200"
-                Height="200"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Bottom"
-                FontSize="24"
-                Text="Ipsme read"
-                TextAlignment="Center" />
-        </Grid>
+                Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <TextBox
+                    Grid.Row="0"
+                    FontSize="32"
+                    Text="Hello, World!" />
+                <TextBox
+                    Grid.Row="1"
+                    FontSize="18"
+                    Text="Welcome to .NET Multi-platform App UI" />
+                <MediaPlayerElement
+                    x:Name="mediaElement"
+                    Grid.Row="2"
+                    Width="780"
+                    Height="400"
+                    Margin="20"
+                    AreTransportControlsEnabled="True"
+                    Background="Gray"
+                    Source="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4">
+                    <MediaPlayerElement.TransportControls>
+                        <local:CustomTransportControls
+                            FullScreen="CustomTransportControls_FullScreen"
+                            IsFastForwardButtonVisible="True"
+                            IsFastForwardEnabled="True"
+                            IsFastRewindButtonVisible="True"
+                            IsFastRewindEnabled="True"
+                            IsZoomButtonVisible="True"
+                            IsZoomEnabled="True" />
+                    </MediaPlayerElement.TransportControls>
+                </MediaPlayerElement>
+                <TextBlock
+                    x:Name="Text"
+                    Grid.Row="3"
+                    Width="200"
+                    Height="200"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Bottom"
+                    FontSize="24"
+                    Text="Ipsme read"
+                    TextAlignment="Center" />
+            </Grid>
+        </StackPanel>
+
     </Page>
 </Window>

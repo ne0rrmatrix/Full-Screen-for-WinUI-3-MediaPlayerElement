@@ -3,6 +3,8 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Windowing;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Controls;
 
 namespace App1;
 public class CustomBinding
@@ -18,18 +20,65 @@ public class CustomBinding
         if (_appWindow.Presenter.Kind == AppWindowPresenterKind.FullScreen)
         {
             _appWindow.SetPresenter(AppWindowPresenterKind.Default);
-            Element.ForEach(x => SetItemSize(x.Element, x.Width, x.Height, x.Thickness));
-            Debug.WriteLine("");
+            Element.ForEach(x => SetItemSize(x.Element, x.Width, x.Height, x.Thickness, true));
             Element.Clear();
         }
         else
         {
             _appWindow.SetPresenter(AppWindowPresenterKind.FullScreen);
             GetAllElements(element);
-            Debug.WriteLine("");
-            Element.ForEach(x => SetItemSize(x.Element, double.NaN, double.NaN, new Thickness(0, 0, 0, 0)));
-            Debug.WriteLine("");
-            
+            Element.ForEach(x => SetItemSize(x.Element, double.NaN, double.NaN, new Thickness(0, 0, 0, 0), false));
+        }
+    }
+    private static bool MediaElementIsDescendant(FrameworkElement element)
+    {
+        if (element is null)
+        {
+            Debug.WriteLine("Exiting recursiion");
+            return false;
+        }    
+        for(var i = 0; i < VisualTreeHelper.GetChildrenCount(element); i++)
+        {
+            var child = VisualTreeHelper.GetChild(element, i) ?? null;
+            if (child is null)
+            {
+                return false;
+            }
+            var type = child.GetType();
+            if (type == typeof(MediaPlayerElement))
+            {
+                return true;
+            }
+            var item = MediaElementIsDescendant(child as FrameworkElement);
+            if (item)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    private static void SetAllChildrenVisibility(FrameworkElement view, bool visible)
+    {
+        view = view.Parent as FrameworkElement ?? null;
+        if (view is null)
+        {
+            return;
+        }
+        for(var i = 0; i < VisualTreeHelper.GetChildrenCount(view); i++)
+        {
+            var child = VisualTreeHelper.GetChild(view, i);
+            if (child is not FrameworkElement item)
+            {
+                return;
+            }
+            if (visible)
+            {
+                item.Visibility = Visibility.Visible;
+            }
+            else if (item.GetType() != typeof(MediaPlayerElement) && !MediaElementIsDescendant(item))
+            {
+                item.Visibility = Visibility.Collapsed;
+            }
         }
     }
     private void GetAllElements(FrameworkElement element)
@@ -42,8 +91,6 @@ public class CustomBinding
             Height = GetHeight(element)
         };
         Element.Add(temp);
-
-        Debug.WriteLine(temp.Thickness.Left + " " + temp.Thickness.Top + " " + temp.Thickness.Right + " " + temp.Thickness.Bottom);
         while (true)
         {
             ElementData item = new();
@@ -57,7 +104,6 @@ public class CustomBinding
             item.Width = GetWidth(element);
             item.Height = GetHeight(element);
             Element.Add(item);
-            Debug.WriteLine(item.Thickness.Left + " " + item.Thickness.Top + " " + item.Thickness.Right + " " + item.Thickness.Bottom);
         }
     }
     private static double GetWidth(FrameworkElement frameworkElement)
@@ -101,12 +147,12 @@ public class CustomBinding
         frameworkElement.SetBinding(FrameworkElement.WidthProperty, bWidth);
         frameworkElement.SetBinding(FrameworkElement.HeightProperty, bHeight);
     }
-    private static void SetItemSize(FrameworkElement frameworkElement, double width, double height, Thickness thickness)
+    private static void SetItemSize(FrameworkElement frameworkElement, double width, double height, Thickness thickness, bool visibility)
     {
         SetItems(frameworkElement, width, height);
         BindWidth(frameworkElement, frameworkElement);
         BindHeight(frameworkElement, frameworkElement);
         frameworkElement.Margin = new Thickness(thickness.Left, thickness.Top, thickness.Right, thickness.Bottom);
-        Debug.WriteLine(thickness.Left + " " + thickness.Top + " " + thickness.Right + " " + thickness.Bottom);
+        SetAllChildrenVisibility(frameworkElement, visibility);
     }
 }
