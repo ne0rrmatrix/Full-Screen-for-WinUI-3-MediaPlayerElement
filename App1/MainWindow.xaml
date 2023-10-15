@@ -8,10 +8,11 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     x:Name="window"
     mc:Ignorable="d">
-    <Page Margin="10" Background="White">
+    <Page Margin="10">
         <StackPanel>
-            <TextBox
-                Grid.Row="0"
+
+            <TextBlock
+                HorizontalAlignment="Center"
                 FontSize="32"
                 Text="Hello, World!" />
             <Grid
@@ -27,12 +28,14 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <TextBox
+                <TextBlock
                     Grid.Row="0"
+                    HorizontalAlignment="Center"
                     FontSize="32"
                     Text="Hello, World!" />
-                <TextBox
+                <TextBlock
                     Grid.Row="1"
+                    HorizontalAlignment="Center"
                     FontSize="18"
                     Text="Welcome to .NET Multi-platform App UI" />
                 <MediaPlayerElement

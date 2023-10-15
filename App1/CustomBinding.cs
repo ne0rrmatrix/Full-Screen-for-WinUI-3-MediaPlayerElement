@@ -32,11 +32,6 @@ public class CustomBinding
     }
     private static bool MediaElementIsDescendant(FrameworkElement element)
     {
-        if (element is null)
-        {
-            Debug.WriteLine("Exiting recursiion");
-            return false;
-        }    
         for(var i = 0; i < VisualTreeHelper.GetChildrenCount(element); i++)
         {
             var child = VisualTreeHelper.GetChild(element, i) ?? null;
@@ -64,7 +59,7 @@ public class CustomBinding
         {
             return;
         }
-        for(var i = 0; i < VisualTreeHelper.GetChildrenCount(view); i++)
+        for (var i = 0; i < VisualTreeHelper.GetChildrenCount(view); i++)
         {
             var child = VisualTreeHelper.GetChild(view, i);
             if (child is not FrameworkElement item)
